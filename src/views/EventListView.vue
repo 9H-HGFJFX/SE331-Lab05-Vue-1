@@ -43,9 +43,9 @@ const updatePageSize = (event: globalThis.Event) => {
   const newSize = parseInt(target.value)
   router.push({
     name: 'event-list-view',
-    query: { 
+    query: {
       page: '1', // 切换条数时重置到第一页
-      pageSize: newSize.toString() 
+      pageSize: newSize.toString()
     }
   })
 }
@@ -54,7 +54,7 @@ const updatePageSize = (event: globalThis.Event) => {
 onMounted(() => {
   // watchEffect：监听 currentPage 和 currentPageSize 变化，自动重新请求
   watchEffect(() => {
-    EventService.getEvents(currentPageSize.value, currentPage.value)
+    EventService.getEventsByPage(currentPageSize.value, currentPage.value)
       .then((response) => {
         events.value = response.data
         // 从响应头获取总条数（确保后端正确返回 x-total-count）
@@ -76,9 +76,9 @@ onMounted(() => {
     <!-- 1. 每页条数选择器 -->
     <div class="page-size-selector">
       <label>Display per page: </label>
-      <select 
+      <select
         @change="updatePageSize($event)"
-        :value="pageSize" 
+        :value="pageSize"
       >
         <option value="2">2 pieces</option>
         <option value="3">3 pieces</option>
@@ -89,10 +89,10 @@ onMounted(() => {
     <!-- 2. 事件卡片容器：用 Tailwind 类实现居中布局，删除冗余 .events 类 -->
     <div class="flex flex-col items-center">
       <!-- 循环渲染事件卡片（判断 events 非空，避免报错） -->
-      <EventCard 
-        v-for="event in events" 
-        :key="event.id" 
-        :event="event" 
+      <EventCard
+        v-for="event in events"
+        :key="event.id"
+        :event="event"
         v-if="events"
       />
     </div>
@@ -102,9 +102,9 @@ onMounted(() => {
       <RouterLink
         id="page-prev"
         v-if="currentPage !== 1"
-        :to="{ 
-          name: 'event-list-view', 
-          query: { page: currentPage - 1, pageSize: currentPageSize } 
+        :to="{
+          name: 'event-list-view',
+          query: { page: currentPage - 1, pageSize: currentPageSize }
         }"
         rel="prev"
       >
@@ -114,9 +114,9 @@ onMounted(() => {
       <RouterLink
         id="page-next"
         v-if="hasNextPage"
-        :to="{ 
-          name: 'event-list-view', 
-          query: { page: currentPage + 1, pageSize: currentPageSize } 
+        :to="{
+          name: 'event-list-view',
+          query: { page: currentPage + 1, pageSize: currentPageSize }
         }"
         rel="next"
       >

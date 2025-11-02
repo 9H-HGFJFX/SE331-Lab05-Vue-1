@@ -10,12 +10,19 @@ const apiClient = axios.create({
 })
 
 export default {
+  // 新增带分页参数的方法
+  getEventsByPage(pageSize: number, page: number) {
+    return apiClient.get('/events', {
+      params: {
+        _limit: pageSize,
+        _page: page
+      }
+    })
+  },
   getEvents() {
     return apiClient.get('/events')
   },
-  getEvent(id:number){
-    return apiClient.get('/events/'+id)
+  getEvent(id: number) {
+    return apiClient.get('/events/' + id)
   }
 }
-
-
