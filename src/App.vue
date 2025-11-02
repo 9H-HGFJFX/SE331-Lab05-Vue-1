@@ -10,6 +10,7 @@ const {message} = storeToRefs(store)
 </script>
 
 <template>
+
     <SpeedInsights />
     <div class="text-center font-sans text-gray-700 antialias">
 
